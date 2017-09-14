@@ -1,0 +1,77 @@
+#########################################################
+#       Traffic http service request replacements       #
+#########################################################
+
+traffic:
+    dummydata:
+        # Replacement to be done on urls
+        # Use " = " for "key = value" separator
+        # Use " : " for key "store : regex to replace" separator
+        # Use "," for entry separator
+        requestReplacements:
+            # austria -> testuseraustria@pikamachu.com
+            - de_AT ; token[^&]* = token=FA8E0EFB1FA91195B0197A4B2945402577BB4C854905C0FD46CAD927D28118C9
+            # belgium -> testuserbelgium@pikamachu.com
+            - fr_BE ; token[^&]* = token=B8A580D5FFCB44317B6E2898C2317CEBE1B9B95E9DDA674E91D4A4F2B936D7CD
+            # canada -> testusercanada@pikamachu.com
+            - en_CA ; token[^&]* = token=9983964BDE3CB2CE4A0478B8DC29BAAE9F9AE9BDE7D1364D0C0423093E1A7B0E
+            # denmark -> testuserdenmark@pikamachu.com
+            - en_DK ; token[^&]* = token=DCC8A5E81A20FEA67DFEFBEBC8C348715E79EC00FDEAFBAC0596ECEA901576D9
+            # estonia -> testuserestonia@pikamachu.com
+            - en_EE ; token[^&]* = token=87525B86A3B855CE76CB6C30BDF8117DECB357947B6309CC909C78648384A37E
+            # finland -> testuserfinland@pikamachu.com
+            - en_FI ; token[^&]* = token=1D1DAC401EAA08C1FCD19AE2B6FFBF7C79CA7CD7A035E3957855A4CBAE0CEB18
+            # france -> testuserfrance@pikamachu.com
+            - fr_FR ; token[^&]* = token=06CAC4338C2EA6A60118AACD14758763D619B06ADE0FBE5993136399FE9892EE
+            # deutschland -> testuserdeutschland@pikamachu.com
+            - de_DE ; token[^&]* = token=B254529FFDE71A850030C05A6C292D4BB71A2D41A4E4CFABDA530BE52DCF4707
+            # hongkong -> testuserdhongkong@pikamachu.com
+            - en_HK ; token[^&]* = token=A6D4978D69131DB33A0757A528392BF3BC378538059AE9D4B9734B990521A3E0
+            # ireland -> testuserireland@pikamachu.com
+            - en_IE ; token[^&]* = token=0F74C208FCD5194B4430017B584A01B2A74C34FA71C8FF437DD281DD8C354488
+            # italy  -> testuseritaly@pikamachu.com
+            - it_IT ; token[^&]* = token=8C25BF12809E3186E109660A184D6A0D212AE62BF26CF781B7171CED40AAEADE
+            # japan -> testuserjapan@pikamachu.com
+            - ja_JT ; token[^&]* = token=913F67FC00C3F56BA1E71E44380A0FBE6EF65ABB6EFC923D7CD1755C36D33077
+            # luxemburgo -> testuserluxemburgo@pikamachu.com
+            - fr_LU ; token[^&]* = token=E76DFBCD28712698A25498953C75BBF2E85A1ACD88C92B8B3512F6F668C2CB50
+            # malta -> testusermalta@pikamachu.com
+            - en_MT ; token[^&]* = token=9BE29A3DA10099E2C12B94180F95F2523FA56D37B3FA4938484F27ED4E9B9891
+            # nederlands -> testusernederlands@pikamachu.com
+            - nl_NL ; token[^&]* = token=636C9E3899162741B3762A47470BE8E75BC06896F59EF9142FFB1084371597E9
+            # poland  -> testuserpoland@pikamachu.com
+            - en_PL ; token[^&]* = token=2304FDC1283BFE417A01545A5289D9F30FAB8D56CA91DFFC6912385124BE7393
+            # portugal -> testuserportugal@pikamachu.com
+            - pt_PT ; token[^&]* = token=06EE6C7D264F09B1E2347ECC432DDCC6AA1943BB116DDE592068946BDB93B411
+            # cyprustestusercyprus@pikamachu.com
+            - en_CY ; token[^&]* = token=86E4CD707A979D044E0A4572DA5E13D203FCE7FCF96BD0285944013E2EA2C658
+            # russia -> testuserrussia@pikamachu.com
+            - en_RU ; token[^&]* = token=B88DD4EFA710F5E71D3FA998394D05C868A4CD8474CC0456941DA91E1A224D56
+            # singapore -> testusersingapore@pikamachu.com
+            - en_SG ; token[^&]* = token=FEC2182FE20F011418946751266D05E42BB1E63BD368096C9A792206D6F6A2CC
+            # spain -> testuserspain@pikamachu.com
+            - es_ES ; token[^&]* = token=833BC826D3C00282706574DBF87BBEC4888146352FA0D7B2DEF532E4751DE463
+            # sweden -> testusersweden@pikamachu.com
+            - en_SE ; token[^&]* = token=FC8DFB8224276E59C5D1864C35B018370B7767EC1DA8625FC664886157843CC5
+            # switchland -> testuserswitchland@pikamachu.com
+            - en_CH ; token[^&]* = token=9232FA64842DD1F8054769A335E652E1B4C8601984D3DC6C9B64C92BB4A31789
+            # uktestuseruk@pikamachu.com
+            - en_GB ; token[^&]* = token=AC952F92D91CD1598F7BA119BFF99D98B90C746FBF2BA2F5281C55F627486630 -> 
+            # usa -> testuserusa@pikamachu.com
+            - es_ES ; token[^&]* = token=B89A176805326DCCC089552B652BF75450F7AEE77DE08960F6D9AD948525A14B
+            # Others ; replace with nothing
+            - token[^&]* = 
+        
+        
+        # Add querystring values to urls that matches keys. 
+        # Use " = " for key value separator
+        # Use "," for entry separator
+        requestAddQuerystring:
+        #    - .* = refresh=true
+        
+        
+        # Dummy Post data to be used on POST urls that matches keys
+        # Use " = " for key value separator
+        # Use "," for entry separator
+        postDataDummyInfo:
+            - /api/v2/cart/sku/add/.* = {"skuId":"72C12J31000M"}

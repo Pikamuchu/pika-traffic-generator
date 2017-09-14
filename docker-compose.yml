@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  application:
+    build: .
+    image: pikamachu/traffic-generator
+    environment:
+      - JAVA_OPTS=
+      - APP_PROFILE=default
+    volumes:
+      - ~/traffic-generator/logs:/opt/app/logs
+    container_name: traffic-generator

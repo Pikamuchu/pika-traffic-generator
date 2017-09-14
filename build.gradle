@@ -1,0 +1,86 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.3.8.RELEASE')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+group = 'com.pikamachu.b2c'
+version = '0.1.0' + getTimestamp()
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories { 
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-batch')
+    compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-starter-logging')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.cloud:spring-cloud-starter-consul-discovery:1.1.4.RELEASE')
+    compile('org.springframework.cloud:spring-cloud-starter-consul-config:1.1.4.RELEASE')
+    compile('de.codecentric:spring-boot-starter-admin-client:1.1.2')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jar {
+    baseName = 'traffic-generator'
+}
+
+//Set environment profile and proxy settings
+bootRun {
+	jvmArgs = [
+		"-Dspring.profiles.active=default"
+	]
+}
+
+processResources {
+    filesMatching("**/application.properties") {
+        expand project.properties
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/repositories/releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/repositories/snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+        }
+    }
+}
+
+eclipse {
+	classpath {
+		containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	}
+}
+
+def getTimestamp() {
+    def date = new Date()
+    return date.format('-yyyyMMddHHmm')
+}

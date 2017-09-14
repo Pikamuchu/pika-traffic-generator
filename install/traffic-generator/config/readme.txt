@@ -1,0 +1,1 @@
+Here you can find application configuration properties

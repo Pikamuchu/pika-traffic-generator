@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    
+	<jmxConfigurator/>
+
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-./logs}/}application}"/>
+    
+    <springProfile name="default,local,dev,test,pre,prod">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+        <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- Support multiple-JVM writing to the same log file -->
+    		<prudent>true</prudent>
+    		<!-- Using Size and Time rolling policy -->
+    		<file>${LOG_FILE}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                <!-- each file should be at most 100MB, keep 10 days worth of history, but at most 500MB -->
+                <maxFileSize>100MB</maxFileSize>    
+                <maxHistory>10</maxHistory>
+                <totalSizeCap>500MB</totalSizeCap>
+            </rollingPolicy>
+            <!-- Using defaults file log pattern -->
+            <encoder>
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <root level="ERROR">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ROLLING-FILE"/>
+        </root>
+    </springProfile>
+
+	<logger name="org.springframework.security">
+		<level value="info" />
+	</logger>
+	
+	<!-- Application Loggers -->
+	<logger name="org.springframework.traffic">
+		<level value="info" />
+	</logger>
+	
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.beans">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+
+</configuration>

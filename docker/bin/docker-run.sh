@@ -1,0 +1,44 @@
+#! /bin/sh
+
+APPLICATION_NAME=traffic-generator
+APPLICATION_PORT=8090
+APPLICATION_HOME=$(dirname "$0")
+APPLICATION_PROFILE=test
+APPLICATION_JAVA_OPTS=
+
+if [ "$TRAFFIC_GENERATOR_HOMEx" != "x" ]; then
+    APPLICATION_HOME=$TRAFFIC_GENERATOR_HOME
+fi
+
+if [ "$TRAFFIC_GENERATOR_PROFILEx" != "x" ]; then
+    APPLICATION_PROFILE=$TRAFFIC_GENERATOR_PROFILE
+fi
+
+if [ "$JAVA_OPTSx" != "x" ]; then
+    APPLICATION_JAVA_OPTS=$JAVA_OPTS
+fi
+
+if [ "$1x" != "x" ]; then
+    APPLICATION_PORT=$1
+fi
+
+if [ "$2x" != "x" ]; then
+    APPLICATION_PROFILE=$2
+fi
+
+echo "Running docker $APPLICATION_NAME$1..."
+echo "APPLICATION_PORT=$APPLICATION_PORT"
+echo "APPLICATION_HOME=$APPLICATION_HOME"
+echo "APPLICATION_PROFILE=$APPLICATION_PROFILE"
+
+docker kill $APPLICATION_NAME$1
+docker rm $APPLICATION_NAME$1
+
+docker run -d \
+    -e JAVA_OPTS="$APPLICATION_JAVA_OPTS" \
+    -e APP_PROFILE="$APPLICATION_PROFILE" \
+    -v $APPLICATION_HOME/config:/opt/app/config \
+    -v $APPLICATION_HOME/logs:/opt/app/logs \
+    -p $APPLICATION_PORT:8090 \
+    --name $APPLICATION_NAME$1 pikamachu/$APPLICATION_NAME
+

@@ -1,0 +1,8 @@
+spring:
+    cloud:
+        consul:
+            enabled: false
+            host: 10.3.0.42
+            port: 8500
+            discovery:
+                enabled: true

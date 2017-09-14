@@ -1,0 +1,34 @@
+#! /bin/sh
+
+APPLICATION_NAME=spring-boot-admin
+APPLICATION_PORT=9090
+APPLICATION_HOME=$(dirname "$0")
+APPLICATION_CMD=
+APPLICATION_JAVA_OPTS=
+
+if [ "$CONSUL_HOMEx" != "x" ]; then
+    APPLICATION_HOME=$SPRING_BOOT_HOME
+fi
+
+if [ "$1x" != "x" ]; then
+    APPLICATION_PORT=$1
+fi
+
+if [ "$JAVA_OPTSx" != "x" ]; then
+    APPLICATION_JAVA_OPTS=$JAVA_OPTS
+fi
+
+echo "Running docker $APPLICATION_NAME$1..."
+echo "APPLICATION_PORT=$APPLICATION_PORT"
+echo "APPLICATION_HOME=$APPLICATION_HOME"
+
+docker kill $APPLICATION_NAME$1
+docker rm $APPLICATION_NAME$1
+
+docker run -d \
+    -e JAVA_OPTS="$APPLICATION_JAVA_OPTS" \
+    -e APP_PROFILE="$APPLICATION_PROFILE" \
+    -v $APPLICATION_HOME/data:/consul/data \
+    -p $APPLICATION_PORT:8080 \
+    --name $APPLICATION_NAME$1 aetas/$APPLICATION_NAME-docker:1.4.1 $APPLICATION_CMD
+
